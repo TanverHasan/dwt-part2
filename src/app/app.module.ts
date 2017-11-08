@@ -8,27 +8,40 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ReportingPage } from '../pages/reporting/reporting';
+import { IonicStorageModule } from '@ionic/storage';
+import { DataService } from '../providers/shared/shared';
+import { ReportingDetailsPage } from '../pages/reporting-details/reporting-details';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    ReportingPage,
+    ReportingDetailsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name:'__mydb',
+      driverOrder:['indexeddb','sqlite','websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    ReportingPage,
+    ReportingDetailsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},Storage,
+    DataService
   ]
 })
 export class AppModule {}
