@@ -12,6 +12,8 @@ import { ReportingPage } from '../pages/reporting/reporting';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataService } from '../providers/shared/shared';
 import { ReportingDetailsPage } from '../pages/reporting-details/reporting-details';
+import { EmergenceyListPage } from '../pages/emergencey-list/emergencey-list';
+import { Geolocation } from "@ionic-native/geolocation";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ReportingDetailsPage } from '../pages/reporting-details/reporting-detai
     HomePage,
     ListPage,
     ReportingPage,
-    ReportingDetailsPage
+    ReportingDetailsPage,
+    EmergenceyListPage
   ],
   imports: [
     BrowserModule,
@@ -35,13 +38,14 @@ import { ReportingDetailsPage } from '../pages/reporting-details/reporting-detai
     HomePage,
     ListPage,
     ReportingPage,
-    ReportingDetailsPage
+    ReportingDetailsPage,
+    EmergenceyListPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},Storage,
-    DataService
+    DataService,Geolocation
   ]
 })
 export class AppModule {}

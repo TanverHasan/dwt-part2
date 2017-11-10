@@ -12,16 +12,27 @@
   <ion-searchbar (ionInput)="Search($event)"></ion-searchbar>
 
 
-  <ion-card *ngFor="let item of items" (click)="itemTapped($event,item)" >
+  <ion-card *ngFor="let item of items" (click)="itemTapped($event,item)">
     <ion-card-content>
-      <ion-icon name="star"></ion-icon>
-      {{item.name}}
-      <p>{{item.description}}</p>
-      <p>{{item.time}}</p>
-      <p>{{item.date}}</p>
+      <button *ngIf="!item?.hotItem">
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+      </button>
+      <button *ngIf="item?.hotItem">
+        <ion-icon name="flame"></ion-icon>
+        <ion-icon name="flame"></ion-icon>
+        <ion-icon name="flame"></ion-icon>
+      </button>
+      {{item?.name}}
+      <p>{{item?.description}}</p>
+      <p>{{item?.time}}</p>
+      <p>{{item?.date}}</p>
     </ion-card-content>
   </ion-card>
-  <button ion-button color="danger" (click)="removeAll()">Remove all</button>
+  <button ion-button full color="danger" (click)="removeAll()">
+    <ion-icon name="trash"></ion-icon>
+    Remove all</button>
 </ion-content>
 
 

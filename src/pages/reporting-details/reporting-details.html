@@ -17,13 +17,37 @@
   <ion-card>
     <img src="" />
     <ion-card-content>
+      <ion-col width-50 text-right>
+        <button *ngIf="!isAlert">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </button>
+        <button *ngIf="isAlert">
+          <ion-icon name="flame"></ion-icon>
+          <ion-icon name="flame"></ion-icon>
+          <ion-icon name="flame"></ion-icon>
+        </button>
+
+      </ion-col>
       <ion-card-title>
         Reporting
       </ion-card-title>
-      <p> {{item.name}} </p>
-      <p> {{item.description}} </p>
-      <p> {{item.date}} </p>
-      <p> {{item.time}} </p>
+      <p> Name:  {{item?.name}} </p>
+      <p> Description:  {{item?.description}} </p>
+      <p> Date : {{item?.date}} </p>
+      <p> Time:  {{item?.time}} </p>
+      <p> Latitude:  {{item?.location?.lat}} </p>
+      <p> Longitude:  {{item?.location?.lon}} </p>
     </ion-card-content>
+
+    <button ion-button  full color="danger" (click)="addAlert()" *ngIf="!isAlert">
+        <ion-icon name="alert"></ion-icon>
+      Add Alert</button>
+      <button ion-button  full color="danger" (click)="remove()">
+          <ion-icon name="trash"></ion-icon>
+        Delete </button>
   </ion-card>
+
+
 </ion-content>

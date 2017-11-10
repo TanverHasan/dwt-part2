@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
 import { Storage } from "@ionic/storage";
-
+import * as _ from "lodash";
 /*
   Generated class for the SharedProvider provider.
 
@@ -10,41 +10,69 @@ import { Storage } from "@ionic/storage";
 */
 @Injectable()
 export class DataService {
+  items: Array<IReporting> = [];
 
-  storageName: string = "reportingitem";
-  Reporting: IReporting;
-  Data: any[] = [];
-  constructor(private storage: Storage) {
-    this.getData();
+  constructor(private storage: Storage) {}
+
+  saveData(ob: IReporting) {
+    this.storage.set(ob.id, ob);
+  }
+  getAllItems() {
+    this.items=[];
+   return  this.storage.forEach((v, k) => {
+      this.items.push(v);
+    }).then(()=>{
+      return this.items;
+    });
+
   }
 
-  getData() {
-    return this.storage.get(this.storageName).then(val => {
-      this.Data = val;
-      return this.Data;
+
+  getItemById(id): Promise<IReporting> {
+    return this.storage.get(id).then(val => {
+      return val as IReporting;
     });
   }
-  saveData(ob: any) {
-    // if (ob != null) {
-    //   console.log(ob);
-    //   const insertItem=Object.assign({},this.Reporting , ob);
-    //   this.Data.push(insertItem);
-    //   console.log(" data array" +this.Data);
-    //
-    // }
-    this.storage.set(this.storageName, ob);
-   // console.log("Object is null");
+
+  addToAlert(item: IReporting, id) {
+    this.storage.set(id, item);
   }
+  removeItem(id) {
+    return this.storage.remove(id).then(() => {
+      return true;
+    });
+  }
+
+  // getHotItems() {
+  //   this.getAllItems().filter()
+  // }
 
   clearSotrage() {
     this.storage.clear();
-    this.Data = [];
+  }
+
+  generateId() {
+    return (
+      "_" +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    );
   }
 }
 export interface IReporting {
+  id: string;
   name: string;
   description: string;
   time: string;
   date: string;
   picture: string;
+  hotItem: boolean;
+  url: string;
+  location: ILocation
+}
+
+export interface ILocation{
+  lat: number,
+  lon: number
 }

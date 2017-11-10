@@ -25,29 +25,33 @@ export class ListPage {
     public loadingCtrl: LoadingController
   ) {
     let loader = this.loadingCtrl.create({
-      content: "Getting data",
-      dismissOnPageChange: true
+      content: "Getting data"
     });
-    loader.present();
+    loader.present().then(() => {
+      this.stData.getAllItems().then(val => {
+        this.items = val;
+        console.log(this.items);
+        loader.dismiss().then(() => {});
+      });
+      // this.stData.getData().then(val => {
 
-    this.stData.getData().then(val => {
-      this.items = val;
+      // });
     });
   }
-  ionViewLoaded() {
+  itemTapped($event, reportingItem) {
+    this.navCtrl.push(ReportingDetailsPage, reportingItem);
+  }
 
-  }
-  itemTapped($event,reportingItem){
-    this.navCtrl.push(ReportingDetailsPage,reportingItem)
-  }
   removeAll() {
     const alert = this.alertCtrl.create({
       title: "Clear Database",
       subTitle: "You are deleting all your reporting items",
       buttons: ["OK"]
     });
-    alert.present();
-    this.stData.clearSotrage();
+    alert.present().then(() => {
+      this.stData.clearSotrage();
+      this.items = [];
+    });
   }
   Search() {
     console.log("search clicked");

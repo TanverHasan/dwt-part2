@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -25,10 +24,18 @@
     </ion-item>
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY"  formControlName="date"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY" formControlName="date"></ion-datetime>
     </ion-item>
-    <button ion-button large type="submit" [disabled]="!form.valid">Submit</button>
-  </form>
+    <ion-item>
+      <ion-label>Add alert</ion-label>
+      <ion-toggle formControlName="hotItem"></ion-toggle>
+    </ion-item>
+    <button ion-button full color="success" type="submit" [disabled]="!form.valid">
+      <ion-icon name="create"></ion-icon>
+      Submit </button>
 
+    <!-- <button ion-button large type="submit" [disabled]="!form.valid">Submit</button> -->
+  </form>
+  <button ion-button full color="success" (click)="GetGeoLocation()">Get Geolocation </button>
 
 </ion-content>
