@@ -8,30 +8,35 @@ import {
   ILocation
 } from "../../providers/shared/shared";
 import { Geolocation } from "@ionic-native/geolocation";
+import { Camera, CameraOptions } from "@ionic-native/camera";
 @Component({
   selector: "page-reporting",
   templateUrl: "reporting.html"
 })
 export class ReportingPage {
+  imgSrc: any;
   currentLocation: ILocation;
   Returned: any;
   form: FormGroup;
   data: IReporting;
   listOfItem: Array<IReporting> = [];
+  images: Array<{ src: String }>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private st: DataService,
     private fb: FormBuilder,
     private toastCtrl: ToastController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private camera: Camera
   ) {
+    this.images = [];
     this.form = this.fb.group({
       name: [""],
       description: [""],
       time: [""],
       date: [""],
-      picture: [""],
+      imgSrcs: [""],
       hotItem: [""],
       location: this.fb.group({
         lat: [""],
@@ -53,6 +58,8 @@ export class ReportingPage {
       position: "middle"
     });
     toast.present().then(() => {
+      // this.GetGeoLocation()
+
       this.geolocation
         .getCurrentPosition()
         .then(resp => {
@@ -64,15 +71,13 @@ export class ReportingPage {
           this.form.patchValue({
             location: this.currentLocation
           });
-          // this.data = Object.assign({}, this.form.value);
-          // this.data.id = this.st.generateId();
-          // console.log(this.form.value);
-          // this.st.saveData(this.data);
-          // this.form.reset();
-          // toast.dismiss();
-          // this.navCtrl.push(ListPage);
-        })
-        .then(() => {
+
+          if (this.images != null) {
+            this.form.patchValue({
+              imgSrcs: this.images
+            });
+          }
+
           this.data = Object.assign({}, this.form.value);
           this.data.id = this.st.generateId();
           console.log(this.form.value);
@@ -84,7 +89,7 @@ export class ReportingPage {
         .catch(error => {
           console.log("Error getting location", error);
         });
-      // console.log(this.currentLocation);
+      console.log(this.currentLocation);
     });
   }
 
@@ -104,6 +109,29 @@ export class ReportingPage {
       .catch(error => {
         console.log("Error getting location", error);
       });
+  }
+  takePhoto() {
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      allowEdit: false,
+      encodingType: this.camera.EncodingType.JPEG,
+      saveToPhotoAlbum: true
+    };
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64:
+        let base64Image = "data:image/jpeg;base64," + imageData;
+        this.images.unshift({
+          src: base64Image
+        });
+      },
+      err => {
+        // Handle error
+      }
+    );
   }
 }
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
 import { Storage } from "@ionic/storage";
-import * as _ from "lodash";
+// import * as _ from "lodash";
 /*
   Generated class for the SharedProvider provider.
 
@@ -66,9 +66,8 @@ export interface IReporting {
   description: string;
   time: string;
   date: string;
-  picture: string;
+  imgSrcs: any[];
   hotItem: boolean;
-  url: string;
   location: ILocation
 }
 

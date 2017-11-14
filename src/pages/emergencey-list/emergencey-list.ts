@@ -20,14 +20,18 @@ export class EmergenceyListPage {
       content: "Getting data"
     });
     loader.present().then(() => {
-      this.st.getAllItems().then(val => {
-        val.filter(s => {
-          if (s.hotItem === true) {
-            this.hotList.push(s);
-            loader.dismiss().then(()=>{});
-          }
+      this.st
+        .getAllItems()
+        .then(val => {
+          val.filter(s => {
+            if (s.hotItem === true) {
+              this.hotList.push(s );
+            }
+          });
+        })
+        .then(() => {
+          loader.dismiss().then(() => {});
         });
-      });
     });
 
     // console.log(this.items);

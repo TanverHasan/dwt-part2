@@ -14,6 +14,7 @@ import { DataService } from '../providers/shared/shared';
 import { ReportingDetailsPage } from '../pages/reporting-details/reporting-details';
 import { EmergenceyListPage } from '../pages/emergencey-list/emergencey-list';
 import { Geolocation } from "@ionic-native/geolocation";
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -44,8 +45,9 @@ import { Geolocation } from "@ionic-native/geolocation";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},Storage,
-    DataService,Geolocation
+
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataService,Geolocation,Camera
   ]
 })
 export class AppModule {}

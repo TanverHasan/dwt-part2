@@ -37,5 +37,25 @@
     <!-- <button ion-button large type="submit" [disabled]="!form.valid">Submit</button> -->
   </form>
   <button ion-button full color="success" (click)="GetGeoLocation()">Get Geolocation </button>
+  <div *ngIf="currentLocation">
+    Latitude: {{ currentLocation.lat }} Longtitude : {{ currentLocation.lon}}
+  </div>
+
+
+  <button ion-button full color="success" (click)="takePhoto()">Take Picture </button>
+
+
+
+  <button ion-button round icon-only block (click)="takePhoto()">
+    <ion-icon name="camera"></ion-icon>
+  </button>
+  <ion-slides style="height: 50vh">
+    <ion-slide *ngFor="let image of images">
+      <ion-card>
+        <img [src]="image.src" />
+      </ion-card>
+      <!-- {{image.src}} -->
+    </ion-slide>
+  </ion-slides>
 
 </ion-content>

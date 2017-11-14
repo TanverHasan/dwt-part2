@@ -40,7 +40,14 @@
       <p> Latitude:  {{item?.location?.lat}} </p>
       <p> Longitude:  {{item?.location?.lon}} </p>
     </ion-card-content>
-
+    <ion-slides style="height: 50vh" >
+        <ion-slide *ngFor="let image of item?.imgSrcs">
+            <!-- {{image}} -->
+          <ion-card >
+            <img [src]="image.src" />
+          </ion-card>
+        </ion-slide>
+       </ion-slides>
     <button ion-button  full color="danger" (click)="addAlert()" *ngIf="!isAlert">
         <ion-icon name="alert"></ion-icon>
       Add Alert</button>
