@@ -21,6 +21,75 @@ Then, to run it, cd into `mySideMenu` and run:
 $ ionic cordova platform add ios
 $ ionic cordova run ios
 ```
+#starting 
+```bash
+ionic start --help
+ionic start MyApp sidemenu
+```
+# adding platform
+```bash
+ionic cordova platform --help
+ionic cordova platform add android
+ionic cordova platform add ios
+cordova platform add browser --save
+```
+#adding native support
+```bash
+npm install @ionic-native/core --save
+```
+#build
+```bash
+ionic cordova build android --prod --release
+ionic cordova build ios --prod --release
+```
+#storage
+```bash
+ionic cordova plugin add cordova-sqlite-storage
+npm install --save @ionic-native/sqlite
+```
+#Geolocation
+```bash
+ionic cordova plugin add cordova-plugin-geolocation 
+npm install --save @ionic-native/geolocation
+#camera 
+
+#Device Motion
+```bash
+ionic cordova plugin add cordova-plugin-device-motion
+npm install --save @ionic-native/device-motion
+
+#angular
+```bash
+npm install firebase --save
+npm install  --save angularfire2
+ ```
+#running the project
+```bash
+ionic serve -c
+```
+#third party javascript
+```bash
+npm install -g lodash --save
+```
+```bash
+ionic cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyBEUim66RaUR0fvWrkYeNVQPmlcmtSXzck"
+AIzaSyBEUim66RaUR0fvWrkYeNVQPmlcmtSXzck
+```
+```bash
+$ ionic generate 
+$ ionic generate component
+$ ionic generate directive
+$ ionic generate page
+$ ionic generate pipe
+$ ionic generate provider
+$ ionic generate tabs
+$ ionic generate component foo
+$ ionic generate page Login
+$ ionic generate page Detail --no-module
+$ ionic generate page About --constants
+$ ionic generate pipe MyFilterPipe
+
+```
 
 Substitute ios for android if not on a Mac.
 
