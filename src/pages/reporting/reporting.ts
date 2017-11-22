@@ -9,6 +9,7 @@ import {
 } from "../../providers/shared/shared";
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import { Platform } from "ionic-angular/platform/platform";
 @Component({
   selector: "page-reporting",
   templateUrl: "reporting.html"
@@ -28,7 +29,8 @@ export class ReportingPage {
     private fb: FormBuilder,
     private toastCtrl: ToastController,
     private geolocation: Geolocation,
-    private camera: Camera
+    private camera: Camera,
+    private platform: Platform
   ) {
     this.images = [];
     this.form = this.fb.group({
@@ -83,6 +85,7 @@ export class ReportingPage {
           console.log(this.form.value);
           this.st.saveData(this.data);
           this.form.reset();
+          this.images=[];
           toast.dismiss();
           this.navCtrl.push(ListPage);
         })
@@ -98,40 +101,44 @@ export class ReportingPage {
   }
 
   GetGeoLocation() {
-    this.geolocation
-      .getCurrentPosition()
-      .then(resp => {
-        this.currentLocation = {
-          lat: resp.coords.latitude,
-          lon: resp.coords.longitude
-        };
-      })
-      .catch(error => {
-        console.log("Error getting location", error);
-      });
+    this.platform.ready().then(() => {
+      this.geolocation
+        .getCurrentPosition()
+        .then(resp => {
+          this.currentLocation = {
+            lat: resp.coords.latitude,
+            lon: resp.coords.longitude
+          };
+        })
+        .catch(error => {
+          console.log("Error getting location", error);
+        });
+    });
   }
   takePhoto() {
-    const options: CameraOptions = {
-      quality: 80,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: false,
-      encodingType: this.camera.EncodingType.JPEG,
-      saveToPhotoAlbum: true
-    };
-    this.camera.getPicture(options).then(
-      imageData => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64:
-        let base64Image = "data:image/jpeg;base64," + imageData;
-        this.images.unshift({
-          src: base64Image
-        });
-      },
-      err => {
-        // Handle error
-      }
-    );
+    this.platform.ready().then(() => {
+      const options: CameraOptions = {
+        quality: 80,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        allowEdit: false,
+        encodingType: this.camera.EncodingType.JPEG,
+        saveToPhotoAlbum: true
+      };
+      this.camera.getPicture(options).then(
+        imageData => {
+          // imageData is either a base64 encoded string or a file URI
+          // If it's base64:
+          let base64Image = "data:image/jpeg;base64," + imageData;
+          this.images.unshift({
+            src: base64Image
+          });
+        },
+        err => {
+          // Handle error
+        }
+      );
+    });
   }
 }
 

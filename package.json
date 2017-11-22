@@ -25,6 +25,7 @@
     "@ionic-native/device-motion": "^4.4.2",
     "@ionic-native/flashlight": "^4.4.2",
     "@ionic-native/geolocation": "^4.3.3",
+    "@ionic-native/google-maps": "^4.4.2",
     "@ionic-native/splash-screen": "4.3.2",
     "@ionic-native/status-bar": "4.3.2",
     "@ionic/storage": "2.0.1",
@@ -73,7 +74,8 @@
       "cordova-plugin-camera": {
         "CAMERA_USAGE_DESCRIPTION": " ",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-      }
+      },
+      "cordova-plugin-device-motion": {}
     },
     "platforms": [
       "android",

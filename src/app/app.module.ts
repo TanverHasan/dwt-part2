@@ -15,6 +15,7 @@ import { ReportingDetailsPage } from '../pages/reporting-details/reporting-detai
 import { EmergenceyListPage } from '../pages/emergencey-list/emergencey-list';
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera } from '@ionic-native/camera';
+import {  DeviceMotion } from '@ionic-native/device-motion';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { Camera } from '@ionic-native/camera';
     SplashScreen,
 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataService,Geolocation,Camera
+    DataService,Geolocation,Camera, DeviceMotion
   ]
 })
 export class AppModule {}

@@ -33,27 +33,32 @@
       <ion-card-title>
         Reporting
       </ion-card-title>
-      <p> Name:  {{item?.name}} </p>
-      <p> Description:  {{item?.description}} </p>
+      <p> Name: {{item?.name}} </p>
+      <p> Description: {{item?.description}} </p>
       <p> Date : {{item?.date}} </p>
-      <p> Time:  {{item?.time}} </p>
-      <p> Latitude:  {{item?.location?.lat}} </p>
-      <p> Longitude:  {{item?.location?.lon}} </p>
+      <p> Time: {{item?.time}} </p>
+      <p> Latitude: {{item?.location?.lat}} </p>
+      <p> Longitude: {{item?.location?.lon}} </p>
     </ion-card-content>
-    <ion-slides style="height: 50vh" >
-        <ion-slide *ngFor="let image of item?.imgSrcs">
-            <!-- {{image}} -->
-          <ion-card >
-            <img [src]="image.src" />
-          </ion-card>
-        </ion-slide>
-       </ion-slides>
-    <button ion-button  full color="danger" (click)="addAlert()" *ngIf="!isAlert">
-        <ion-icon name="alert"></ion-icon>
+
+    <ion-slides style="height: 50vh">
+      <ion-slide *ngFor="let image of item?.imgSrcs">
+        <!-- {{image}} -->
+        <ion-card>
+          <img [src]="image.src" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- <div #map id="map" style="height:100%">
+
+    </div> -->
+    <button ion-button full color="danger" (click)="addAlert()" *ngIf="!isAlert">
+      <ion-icon name="alert"></ion-icon>
       Add Alert</button>
-      <button ion-button  full color="danger" (click)="remove()">
-          <ion-icon name="trash"></ion-icon>
-        Delete </button>
+    <button ion-button full color="danger" (click)="remove()">
+      <ion-icon name="trash"></ion-icon>
+      Delete </button>
   </ion-card>
 
 

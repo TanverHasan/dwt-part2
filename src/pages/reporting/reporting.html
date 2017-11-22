@@ -16,7 +16,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Description</ion-label>
-      <ion-input type="text" formControlName="description"></ion-input>
+      <ion-textarea type="text" formControlName="description"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label>Time</ion-label>
@@ -49,7 +49,7 @@
   <button ion-button round icon-only block (click)="takePhoto()">
     <ion-icon name="camera"></ion-icon>
   </button>
-  <ion-slides style="height: 50vh">
+  <ion-slides *ngIf="images" style="height: 50vh">
     <ion-slide *ngFor="let image of images">
       <ion-card>
         <img [src]="image.src" />

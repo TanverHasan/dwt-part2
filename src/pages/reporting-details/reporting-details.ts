@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component} from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { IReporting, DataService } from "../../providers/shared/shared";
 import { ListPage } from "../list/list";
@@ -15,37 +15,35 @@ export class ReportingDetailsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private st : DataService
+    private st: DataService
   ) {
     this.item = this.navParams.data;
     console.log(this.item.date);
 
-    this.st.getItemById(this.item.id).then(val=>{
-      if(val.hotItem==true){
-        this.isAlert=true;
+    this.st.getItemById(this.item.id).then(val => {
+      if (val.hotItem == true) {
+        this.isAlert = true;
       }
     });
   }
 
-  ionViewLoaded() {
-
-  }
+  ionViewLoaded() {}
   ionViewDidLoad() {
-    console.log("ionViewDidLoad ReportingDetailsPage");
+    this.loadMap();
   }
+  loadMap() {}
+
   addAlert() {
     this.isAlert = true;
-    this.item.hotItem=true;
-    this.st.addToAlert(this.item,this.item.id);
+    this.item.hotItem = true;
+    this.st.addToAlert(this.item, this.item.id);
   }
-  remove(){
-    this.st.removeItem(this.item.id).then(val=>{
-      if(val==true){
-      this.navCtrl.push(ListPage);
+  remove() {
+    this.st.removeItem(this.item.id).then(val => {
+      if (val == true) {
+        this.navCtrl.push(ListPage);
       }
-    })
+    });
   }
-  GetAlertedItem(){
-
-  }
+  GetAlertedItem() {}
 }
