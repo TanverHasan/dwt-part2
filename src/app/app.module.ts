@@ -16,6 +16,7 @@ import { EmergenceyListPage } from '../pages/emergencey-list/emergencey-list';
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera } from '@ionic-native/camera';
 import {  DeviceMotion } from '@ionic-native/device-motion';
+// import { GoogleMaps  } from '@ionic-native/google-maps';
 
 @NgModule({
   declarations: [

@@ -10,6 +10,7 @@ import {
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { Platform } from "ionic-angular/platform/platform";
+
 @Component({
   selector: "page-reporting",
   templateUrl: "reporting.html"
@@ -45,6 +46,10 @@ export class ReportingPage {
         lon: [""]
       })
     });
+
+    this.form.patchValue({
+      hotItem: true
+    });
   }
 
   ionViewDidLoad() {
@@ -52,47 +57,33 @@ export class ReportingPage {
   }
 
   save() {
-    // this.st.saveData(this.form.value);
-    // this.listOfItem.push(this.data);
     let toast = this.toastCtrl.create({
       message: "Item was added successfully",
       duration: 8000,
       position: "middle"
     });
     toast.present().then(() => {
-      // this.GetGeoLocation()
-
-      this.geolocation
-        .getCurrentPosition()
-        .then(resp => {
-          this.currentLocation = {
-            lat: resp.coords.latitude,
-            lon: resp.coords.longitude
-          };
-          console.log(this.currentLocation);
-          this.form.patchValue({
-            location: this.currentLocation
-          });
-
-          if (this.images != null) {
-            this.form.patchValue({
-              imgSrcs: this.images
-            });
-          }
-
-          this.data = Object.assign({}, this.form.value);
-          this.data.id = this.st.generateId();
-          console.log(this.form.value);
-          this.st.saveData(this.data);
-          this.form.reset();
-          this.images=[];
-          toast.dismiss();
-          this.navCtrl.push(ListPage);
-        })
-        .catch(error => {
-          console.log("Error getting location", error);
+      if (this.currentLocation != null) {
+        console.log(this.currentLocation);
+        this.form.patchValue({
+          location: this.currentLocation
         });
-      console.log(this.currentLocation);
+      }
+
+      if (this.images != null) {
+        this.form.patchValue({
+          imgSrcs: this.images
+        });
+      }
+
+      this.data = Object.assign({}, this.form.value);
+      this.data.id = this.st.generateId();
+      console.log(this.form.value);
+      this.st.saveData(this.data);
+      this.form.reset();
+      this.images = [];
+      toast.dismiss();
+      this.navCtrl.push(ListPage);
     });
   }
 
@@ -115,6 +106,7 @@ export class ReportingPage {
         });
     });
   }
+
   takePhoto() {
     this.platform.ready().then(() => {
       const options: CameraOptions = {
@@ -135,17 +127,9 @@ export class ReportingPage {
           });
         },
         err => {
-          // Handle error
+          console.log("Error getting picture");
         }
       );
     });
   }
 }
-
-// export interface ISiteReporting {
-//   name: string;
-//   description: string;
-//   time: string;
-//   date: string;
-//   picture: string;
-// }
