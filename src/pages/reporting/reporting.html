@@ -28,26 +28,32 @@
     </ion-item>
     <ion-item>
       <ion-label>Add alert</ion-label>
-      <ion-toggle  checked="true" formControlName="hotItem" ></ion-toggle>
+      <ion-toggle checked="true" formControlName="hotItem"></ion-toggle>
     </ion-item>
     <button ion-button full color="success" type="submit" [disabled]="!form.valid">
-      <ion-icon name="create"></ion-icon>  Submit </button>
+      <ion-icon name="create"></ion-icon> Submit </button>
 
     <!-- <button ion-button large type="submit" [disabled]="!form.valid">Submit</button> -->
   </form>
 
 
   <button ion-button round icon-only block (click)="GetGeoLocation()">
-    <ion-icon name="locate"></ion-icon>  Track location
+    <ion-icon name="locate"></ion-icon> Track location
   </button>
 
   <button ion-button round icon-only block (click)="takePhoto()">
     <ion-icon name="camera"></ion-icon> Take Picture
   </button>
+  <!-- <ion-card *ngIf="currentLocation">
+    <ion-card-content>
+      Lat:{{currentLocation?.lat}} lng: {{currentLocation?.lon}}
+    </ion-card-content>
+  </ion-card> -->
   <ion-card *ngIf="currentLocation">
     <ion-card-content>
-      Lat:{{currentLocation?.lat}}
-      lng: {{currentLocation?.lon}}
+      <agm-map [latitude]="currentLocation?.lat" [longitude]="currentLocation?.lon">
+        <agm-marker [latitude]="currentLocation?.lat" [longitude]="currentLocation?.lon"></agm-marker>
+      </agm-map>
     </ion-card-content>
   </ion-card>
   <ion-slides *ngIf="images" style="height: 50vh">
@@ -58,5 +64,5 @@
       <!-- {{image.src}} -->
     </ion-slide>
   </ion-slides>
- <!-- {{ form.value | json}} -->
+  <!-- {{ form.value | json}} -->
 </ion-content>

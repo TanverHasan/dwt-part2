@@ -16,7 +16,8 @@ import { EmergenceyListPage } from '../pages/emergencey-list/emergencey-list';
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera } from '@ionic-native/camera';
 import {  DeviceMotion } from '@ionic-native/device-motion';
-// import { GoogleMaps  } from '@ionic-native/google-maps';
+import { GoogleMaps  } from '@ionic-native/google-maps';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,9 @@ import {  DeviceMotion } from '@ionic-native/device-motion';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBOtXrZS6MVOMnHDH67wosB54F0vTE6B-w'
+    }),
     IonicStorageModule.forRoot({
       name:'__mydb',
       driverOrder:['indexeddb','sqlite','websql']
@@ -47,9 +51,8 @@ import {  DeviceMotion } from '@ionic-native/device-motion';
   providers: [
     StatusBar,
     SplashScreen,
-
+    DataService,Geolocation,Camera, DeviceMotion, GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataService,Geolocation,Camera, DeviceMotion
   ]
 })
 export class AppModule {}

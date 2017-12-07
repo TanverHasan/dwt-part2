@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, ToastController } from "ionic-angular";
+import {
+  NavController,
+  NavParams,
+  ToastController,
+  LoadingController
+} from "ionic-angular";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ListPage } from "../list/list";
 import {
@@ -31,7 +36,8 @@ export class ReportingPage {
     private toastCtrl: ToastController,
     private geolocation: Geolocation,
     private camera: Camera,
-    private platform: Platform
+    private platform: Platform,
+    public loadingCtrl: LoadingController
   ) {
     this.images = [];
     this.form = this.fb.group({
@@ -82,6 +88,7 @@ export class ReportingPage {
       this.st.saveData(this.data);
       this.form.reset();
       this.images = [];
+      this.currentLocation=null;
       toast.dismiss();
       this.navCtrl.push(ListPage);
     });
@@ -92,18 +99,24 @@ export class ReportingPage {
   }
 
   GetGeoLocation() {
-    this.platform.ready().then(() => {
-      this.geolocation
-        .getCurrentPosition()
-        .then(resp => {
-          this.currentLocation = {
-            lat: resp.coords.latitude,
-            lon: resp.coords.longitude
-          };
-        })
-        .catch(error => {
-          console.log("Error getting location", error);
-        });
+    let loader = this.loadingCtrl.create({
+      content: "Getting Location"
+    });
+    loader.present().then(() => {
+      this.platform.ready().then(() => {
+        this.geolocation
+          .getCurrentPosition()
+          .then(resp => {
+            this.currentLocation = {
+              lat: resp.coords.latitude,
+              lon: resp.coords.longitude
+            };
+            loader.dismiss().then(() => {});
+          })
+          .catch(error => {
+           this.showToast("Error getting location");
+          });
+      });
     });
   }
 
@@ -119,17 +132,25 @@ export class ReportingPage {
       };
       this.camera.getPicture(options).then(
         imageData => {
-          // imageData is either a base64 encoded string or a file URI
-          // If it's base64:
           let base64Image = "data:image/jpeg;base64," + imageData;
           this.images.unshift({
             src: base64Image
           });
         },
         err => {
-          console.log("Error getting picture");
+          this.showToast("Error getting picture");
         }
       );
     });
+  }
+
+  showToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: "middle"
+    });
+
+    toast.present(toast);
   }
 }

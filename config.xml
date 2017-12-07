@@ -93,10 +93,11 @@
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-device-motion" spec="^1.2.5" />
-    <plugin name="cordova-plugin-googlemaps" spec="^2.1.1">
+    <plugin name="cordova-plugin-googlemaps" spec="git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyBEUim66RaUR0fvWrkYeNVQPmlcmtSXzck" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyBEUim66RaUR0fvWrkYeNVQPmlcmtSXzck" />
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="Show your location on the map" />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Trace your location on the map" />
     </plugin>
+    <plugin name="cordova-plugin-flashlight" spec="^3.2.0" />
 </widget>

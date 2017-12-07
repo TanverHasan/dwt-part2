@@ -41,18 +41,38 @@
       <p> Longitude: {{item?.location?.lon}} </p>
     </ion-card-content>
 
-    <ion-slides style="height: 50vh">
+    <ion-slides *ngIf="item?.imgSrcs != '' " style="height: 50vh">
       <ion-slide *ngFor="let image of item?.imgSrcs">
         <!-- {{image}} -->
         <ion-card>
-          <img [src]="image.src" />
+          <img [src]="image?.src" />
         </ion-card>
       </ion-slide>
     </ion-slides>
 
-    <!-- <div #map id="map" style="height:100%">
 
-    </div> -->
+
+    <ion-card *ngIf="item?.location?.lat != '' && item?.location?.lon != '' ">
+      <ion-card-content>
+        <agm-map [latitude]="item?.location?.lat" [longitude]="item?.location?.lon">
+          <agm-marker [latitude]="item?.location?.lat" [longitude]="item?.location?.lon"></agm-marker>
+        </agm-map>
+      </ion-card-content>
+    </ion-card>
+
+
+
+    <!-- <ion-card *ngIf="item?.location?.lat && item?.location?.lon">
+      Map: Using Native Api
+      <ion-card-content>
+        <div id="map_canvas">
+          <button ion-button (click)="onButtonClick()">Show Location</button>
+        </div>
+      </ion-card-content>
+    </ion-card> -->
+
+
+
     <button ion-button full color="danger" (click)="addAlert()" *ngIf="!isAlert">
       <ion-icon name="alert"></ion-icon>
       Add Alert</button>
@@ -61,11 +81,7 @@
       Delete </button>
   </ion-card>
 
-  <!-- <ion-card>
-    <ion-card-content>
-      <div id="map"></div>
-    </ion-card-content>
-  </ion-card> -->
+
 
 
 </ion-content>

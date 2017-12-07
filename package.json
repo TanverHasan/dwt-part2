@@ -12,6 +12,7 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.2",
     "@angular/common": "4.4.4",
     "@angular/compiler": "4.4.4",
     "@angular/compiler-cli": "4.4.4",
@@ -21,7 +22,7 @@
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@ionic-native/camera": "4.3.3",
-    "@ionic-native/core": "4.3.2",
+    "@ionic-native/core": "^4.4.2",
     "@ionic-native/device-motion": "^4.4.2",
     "@ionic-native/flashlight": "^4.4.2",
     "@ionic-native/geolocation": "^4.3.3",
@@ -40,7 +41,7 @@
     "cordova-plugin-device-motion": "^1.2.5",
     "cordova-plugin-flashlight": "^3.2.0",
     "cordova-plugin-geolocation": "~2.4.3",
-    "cordova-plugin-googlemaps": "^2.1.1",
+    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git",
     "cordova-plugin-ionic-webview": "1.1.16",
     "cordova-plugin-splashscreen": "4.0.3",
@@ -82,7 +83,8 @@
         "API_KEY_FOR_IOS": "AIzaSyBEUim66RaUR0fvWrkYeNVQPmlcmtSXzck",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
-      }
+      },
+      "cordova-plugin-flashlight": {}
     },
     "platforms": [
       "android",
