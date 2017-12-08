@@ -5,7 +5,7 @@ import {
   AlertController,
   LoadingController
 } from "ionic-angular";
-import { DataService } from "../../providers/shared/shared";
+import { DataService, IReporting } from "../../providers/shared/shared";
 import { ReportingDetailsPage } from "../reporting-details/reporting-details";
 
 @Component({
@@ -15,8 +15,9 @@ import { ReportingDetailsPage } from "../reporting-details/reporting-details";
 export class ListPage {
   selectedItem: any;
   icons: string[];
-  items: any;
-
+  items: IReporting[];
+  searchInput: string;
+  lastKeypress: number = 0;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,14 +29,14 @@ export class ListPage {
       content: "Getting data"
     });
     loader.present().then(() => {
-      this.stData.getAllItems().then(val => {
-        this.items = val;
-        console.log(this.items);
-        loader.dismiss().then(() => {});
-      });
-      // this.stData.getData().then(val => {
-
-      // });
+      this.loadData();
+      loader.dismiss().then(() => {});
+    });
+  }
+  loadData() {
+    this.stData.getAllItems().then(val => {
+      this.items = val;
+      console.log(this.items);
     });
   }
   itemTapped($event, reportingItem) {
@@ -53,8 +54,19 @@ export class ListPage {
       this.items = [];
     });
   }
-  Search() {
-    console.log("search clicked");
+  Search($event) {
+    let s = $event.target.value;
+
+    if (s != "") {
+      if (this.items.length > 0) {
+        // console.log(this.items);
+        this.items = this.items.filter(f => {
+          return f.name.toLowerCase().indexOf(s.toLowerCase()) > -1;
+        });
+      }
+    } else {
+      this.loadData();
+    }
   }
 }
 

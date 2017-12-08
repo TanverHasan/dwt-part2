@@ -11,27 +11,34 @@
 
   <ion-searchbar (ionInput)="Search($event)"></ion-searchbar>
 
+  <div *ngIf="items">
+    <ion-card *ngFor="let item of items" (click)="itemTapped($event,item)">
+      <ion-card-content>
+        <button *ngIf="!item?.hotItem">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </button>
+        <button *ngIf="item?.hotItem">
+          <ion-icon name="flame"></ion-icon>
+          <ion-icon name="flame"></ion-icon>
+          <ion-icon name="flame"></ion-icon>
+        </button>
+        {{item?.name}}
+        <p>{{item?.description}}</p>
+        <p>{{item?.time}}</p>
+        <p>{{item?.date}}</p>
 
-  <ion-card *ngFor="let item of items" (click)="itemTapped($event,item)">
-    <ion-card-content>
-      <button *ngIf="!item?.hotItem">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-      </button>
-      <button *ngIf="item?.hotItem">
-        <ion-icon name="flame"></ion-icon>
-        <ion-icon name="flame"></ion-icon>
-        <ion-icon name="flame"></ion-icon>
-      </button>
-      {{item?.name}}
-      <p>{{item?.description}}</p>
-      <p>{{item?.time}}</p>
-      <p>{{item?.date}}</p>
 
-
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="items?.length < 1">
+    <hr>
+    <p>
+      No results found
+    </p>
+  </div>
   <button ion-button full color="danger" (click)="removeAll()">
     <ion-icon name="trash"></ion-icon>
     Remove all</button>
