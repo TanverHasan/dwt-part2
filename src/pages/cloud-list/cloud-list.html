@@ -1,0 +1,40 @@
+<!--
+  Generated template for the CloudListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cloud : Reporting List </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div>
+        <ion-card *ngFor="let item of cloudData" (click)="itemTapped($event,item?.id)">
+          <ion-card-content>
+            <button *ngIf="!item?.data?.hotItem">
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </button>
+            <button *ngIf="item?.data?.hotItem">
+              <ion-icon name="flame"></ion-icon>
+              <ion-icon name="flame"></ion-icon>
+              <ion-icon name="flame"></ion-icon>
+            </button>
+            {{item?.data?.name}}
+            <p>{{item?.data?.description}}</p>
+            <p>{{item?.data?.time}}</p>
+            <p>{{item?.data?.date}}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+
+</ion-content>

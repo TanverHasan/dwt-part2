@@ -1,32 +1,35 @@
 import { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
 import { Storage } from "@ionic/storage";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
+} from "angularfire2/firestore";
 // import * as _ from "lodash";
-/*
-  Generated class for the SharedProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DataService {
+  itemDoc: AngularFirestoreDocument<IReporting>;
+  collection: AngularFirestoreCollection<IReporting>;
   items: Array<IReporting> = [];
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private afs: AngularFirestore) {}
 
   saveData(ob: IReporting) {
     this.storage.set(ob.id, ob);
   }
+
   getAllItems() {
-    this.items=[];
-   return  this.storage.forEach((v, k) => {
-      this.items.push(v);
-    }).then(()=>{
-      return this.items;
-    });
-
+    this.items = [];
+    return this.storage
+      .forEach((v, k) => {
+        this.items.push(v);
+      })
+      .then(() => {
+        return this.items;
+      });
   }
-
 
   getItemById(id): Promise<IReporting> {
     return this.storage.get(id).then(val => {
@@ -41,6 +44,26 @@ export class DataService {
     return this.storage.remove(id).then(() => {
       return true;
     });
+  }
+  getAllFromCloud() {
+    this.collection = this.afs.collection<IReporting>("reporting");
+    return this.collection.snapshotChanges().map(actions => {
+      return actions.map(i => {
+        const data = i.payload.doc.data() as IReporting;
+        const id = i.payload.doc.id;
+        return { id, data };
+      });
+    });
+  }
+  getFromCloudById(id) {
+    this.itemDoc = this.afs.doc<IReporting>("reporting" + "/" + id);
+    return this.itemDoc.snapshotChanges().map(actions => {
+      const data = actions.payload.data() as IReporting;
+      return data;
+    });
+  }
+  removeFromCloud(id) {
+    this.afs.doc("reporting/"+id).delete();
   }
 
   // getHotItems() {
@@ -68,10 +91,10 @@ export interface IReporting {
   date: string;
   imgSrcs: any[];
   hotItem: boolean;
-  location: ILocation
+  location: ILocation;
 }
 
-export interface ILocation{
-  lat: number,
-  lon: number
+export interface ILocation {
+  lat: number;
+  lon: number;
 }

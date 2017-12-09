@@ -9,6 +9,11 @@
 
 
 <ion-content>
+  <ion-item>
+    <ion-label>Save To Cloud</ion-label>
+    <ion-checkbox [(ngModel)]="saveToCl"></ion-checkbox>
+  </ion-item>
+
   <form [formGroup]="form" (ngSubmit)="save()">
     <ion-item>
       <ion-label>Name</ion-label>
@@ -35,6 +40,7 @@
 
     <!-- <button ion-button large type="submit" [disabled]="!form.valid">Submit</button> -->
   </form>
+
 
 
   <button ion-button round icon-only block (click)="GetGeoLocation()">

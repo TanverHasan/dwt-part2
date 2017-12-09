@@ -18,6 +18,19 @@ import { Camera } from '@ionic-native/camera';
 import {  DeviceMotion } from '@ionic-native/device-motion';
 import { GoogleMaps  } from '@ionic-native/google-maps';
 import { AgmCoreModule } from '@agm/core';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { CloudListPage } from '../pages/cloud-list/cloud-list';
+import { CloudListDetailsPage } from '../pages/cloud-list-details/cloud-list-details';
+
+var config = {
+  apiKey: "AIzaSyCct1jUjEtMF0GkXDbarnl1TGutc4X9Hnc",
+  authDomain: "dwt-coursework.firebaseapp.com",
+  databaseURL: "https://dwt-coursework.firebaseio.com",
+  projectId: "dwt-coursework",
+  storageBucket: "dwt-coursework.appspot.com",
+  messagingSenderId: "134278989257"
+};
 
 @NgModule({
   declarations: [
@@ -26,7 +39,9 @@ import { AgmCoreModule } from '@agm/core';
     ListPage,
     ReportingPage,
     ReportingDetailsPage,
-    EmergenceyListPage
+    EmergenceyListPage,
+    CloudListPage,
+    CloudListDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -34,6 +49,7 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBOtXrZS6MVOMnHDH67wosB54F0vTE6B-w'
     }),
+    AngularFireModule.initializeApp(config),AngularFirestoreModule,
     IonicStorageModule.forRoot({
       name:'__mydb',
       driverOrder:['indexeddb','sqlite','websql']
@@ -46,7 +62,9 @@ import { AgmCoreModule } from '@agm/core';
     ListPage,
     ReportingPage,
     ReportingDetailsPage,
-    EmergenceyListPage
+    EmergenceyListPage,
+    CloudListPage,
+    CloudListDetailsPage
   ],
   providers: [
     StatusBar,

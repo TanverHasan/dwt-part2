@@ -7,12 +7,20 @@ import {
 } from "ionic-angular";
 import { DataService, IReporting } from "../../providers/shared/shared";
 import { ReportingDetailsPage } from "../reporting-details/reporting-details";
+import { AngularFireModule } from "angularfire2";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from "angularfire2/firestore";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: "page-list",
   templateUrl: "list.html"
 })
 export class ListPage {
+  localData: IReporting[];
+  cloudData: IReporting[];
   selectedItem: any;
   icons: string[];
   items: IReporting[];
@@ -33,12 +41,14 @@ export class ListPage {
       loader.dismiss().then(() => {});
     });
   }
+
   loadData() {
     this.stData.getAllItems().then(val => {
       this.items = val;
       console.log(this.items);
     });
   }
+
   itemTapped($event, reportingItem) {
     this.navCtrl.push(ReportingDetailsPage, reportingItem);
   }
@@ -67,6 +77,9 @@ export class ListPage {
     } else {
       this.loadData();
     }
+  }
+  onCancel() {
+    this.loadData();
   }
 }
 

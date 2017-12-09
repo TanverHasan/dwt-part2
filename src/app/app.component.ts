@@ -6,6 +6,7 @@ import { HomePage } from "../pages/home/home";
 import { ListPage } from "../pages/list/list";
 import { ReportingPage } from "../pages/reporting/reporting";
 import { EmergenceyListPage } from "../pages/emergencey-list/emergencey-list";
+import { CloudListPage } from "../pages/cloud-list/cloud-list";
 
 @Component({
   templateUrl: "app.html"
@@ -30,6 +31,7 @@ export class MyApp {
       { title: "List", component: ListPage },
       { title: "Emergency Items", component: EmergenceyListPage},
       { title: "Add Item", component: ReportingPage },
+      { title : "Cloud Items", component: CloudListPage }
     ];
   }
 

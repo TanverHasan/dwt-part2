@@ -15,6 +15,7 @@ import {
 import { Geolocation } from "@ionic-native/geolocation";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { Platform } from "ionic-angular/platform/platform";
+import { AngularFirestore } from "angularfire2/firestore";
 
 @Component({
   selector: "page-reporting",
@@ -28,6 +29,7 @@ export class ReportingPage {
   data: IReporting;
   listOfItem: Array<IReporting> = [];
   images: Array<{ src: String }>;
+  saveToCl: boolean=false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,7 +39,8 @@ export class ReportingPage {
     private geolocation: Geolocation,
     private camera: Camera,
     private platform: Platform,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public afs: AngularFirestore
   ) {
     this.images = [];
     this.form = this.fb.group({
@@ -63,6 +66,45 @@ export class ReportingPage {
   }
 
   save() {
+    console.log(this.saveToCl);
+    if (this.saveToCl === false) {
+      this.saveToLocalStorage();
+    } else {
+      this.saveToCloud();
+    }
+  }
+
+  private saveToLocalStorage() {
+    let toast = this.toastCtrl.create({
+      message: "Item was added successfully",
+      duration: 8000,
+      position: "middle"
+    });
+    toast.present().then(() => {
+      if (this.currentLocation != null) {
+        console.log(this.currentLocation);
+        this.form.patchValue({
+          location: this.currentLocation
+        });
+      }
+      if (this.images != null) {
+        this.form.patchValue({
+          imgSrcs: this.images
+        });
+      }
+      this.data = Object.assign({}, this.form.value);
+      this.data.id = this.st.generateId();
+      console.log(this.form.value);
+      this.st.saveData(this.data);
+      this.form.reset();
+      this.images = [];
+      this.currentLocation = null;
+      toast.dismiss();
+      this.navCtrl.push(ListPage);
+    });
+  }
+
+  saveToCloud() {
     let toast = this.toastCtrl.create({
       message: "Item was added successfully",
       duration: 8000,
@@ -83,14 +125,16 @@ export class ReportingPage {
       }
 
       this.data = Object.assign({}, this.form.value);
-      this.data.id = this.st.generateId();
-      console.log(this.form.value);
-      this.st.saveData(this.data);
-      this.form.reset();
-      this.images = [];
-      this.currentLocation=null;
-      toast.dismiss();
-      this.navCtrl.push(ListPage);
+      this.afs
+        .collection("reporting")
+        .add(this.data)
+        .then(() => {
+          this.form.reset();
+          this.images = [];
+          this.currentLocation = null;
+          toast.dismiss();
+          this.navCtrl.push(ListPage);
+        });
     });
   }
 
@@ -114,7 +158,7 @@ export class ReportingPage {
             loader.dismiss().then(() => {});
           })
           .catch(error => {
-           this.showToast("Error getting location");
+            this.showToast("Error getting location");
           });
       });
     });
